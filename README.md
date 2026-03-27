@@ -103,8 +103,8 @@ graph TD
 <summary><strong>🪟 Windows</strong></summary>
 
 ```powershell
-git clone https://github.com/RajTewari01/QR_CODE_GENERATOR_WITH_EXE.git
-cd QR_CODE_GENERATOR_WITH_EXE
+git clone https://github.com/RajTewari01/galaxy-qr-generator.git
+cd galaxy-qr-generator
 
 python -m venv venv
 venv\Scripts\activate
@@ -124,8 +124,8 @@ python src/main.py --theme dracula
 <summary><strong>🍎 macOS</strong></summary>
 
 ```bash
-git clone https://github.com/RajTewari01/QR_CODE_GENERATOR_WITH_EXE.git
-cd QR_CODE_GENERATOR_WITH_EXE
+git clone https://github.com/RajTewari01/galaxy-qr-generator.git
+cd galaxy-qr-generator
 
 python3 -m venv venv
 source venv/bin/activate
@@ -145,8 +145,8 @@ python src/main.py --theme synthwave
 <summary><strong>🐧 Linux (Debian / Ubuntu)</strong></summary>
 
 ```bash
-git clone https://github.com/RajTewari01/QR_CODE_GENERATOR_WITH_EXE.git
-cd QR_CODE_GENERATOR_WITH_EXE
+git clone https://github.com/RajTewari01/galaxy-qr-generator.git
+cd galaxy-qr-generator
 
 sudo apt-get update && sudo apt-get install -y python3-venv python3-pyqt5 libgl1-mesa-glx
 
