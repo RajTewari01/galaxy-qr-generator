@@ -1,4 +1,5 @@
-PyQt5
-qrcode
-Pillow
-pyinstaller
+PyQt5>=5.15.2
+qrcode[pil]>=7.3
+Pillow>=9.0.0
+pyinstaller>=6.0.0
+BlurWindow>=1.2.1

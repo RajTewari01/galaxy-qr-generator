@@ -1,0 +1,20 @@
+# Python ignores
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Pyinstaller ignores
+build/
+dist/
+*.spec
+
+# Virtual Environments
+venv/
+env/
+qr/
+.env
+
+# OS generated files
+.DS_Store
+Thumbs.db
