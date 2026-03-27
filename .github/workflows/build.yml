@@ -41,6 +41,11 @@ jobs:
         pip install -r requirements.txt
       shell: bash
 
+    - name: 🧪 Verify Argparse Execution
+      run: |
+        python src/main.py --help
+      shell: bash
+
     - name: 🔨 Generate PyInstaller Executable
       run: |
         pyinstaller UltimateQR.spec

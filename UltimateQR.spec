@@ -7,7 +7,7 @@ block_cipher = None
 datas = [('assets/*', 'assets/')]
 
 a = Analysis(
-    ['src/qr.py'],
+    ['src/main.py'],
     pathex=[],
     binaries=[],
     datas=datas,

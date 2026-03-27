@@ -144,10 +144,11 @@ graph LR
 <tr>
 <td width="50%" valign="top">
 
-### 🎨 Apple-Style Aesthetics
-- **Frameless Custom UI**: An authentic macOS-style traffic light window control system (Close, Min, Max).
-- **Deep Glassmorphism**: Translucent panels with deep shadows mimicking Apple's Acrylic blurs.
-- **Micro-Animations**: Clean hover states, button-press physics, and elegant form inputs.
+### 🎨 Solid Apple-Style Aesthetics & Themes
+- **10 Dynamic Themes**: Fully supports terminal-driven UI switching incorporating palettes like `apple-dark`, `dracula`, `neon-cyber`, `solarized`, `ocean`, `matrix`, `synthwave`, `monokai`, `nord`, and `crimson`!
+- **Solid Dark Engine**: Relies on robust native hex colors ensuring there is zero lag or graphical rendering artifacts.
+- **Frameless Custom UI**: An authentic macOS-style traffic light window control system (Close, Min, Max) completely drag-enabled.
+- **Fluid Maximization**: Refactored structural matrices guaranteeing perfect internal constraints so UI elements do not disproportionately stretch on ultrawide monitors.
 - **Refined Typography**: Native system fonts tuned for maximum readability and a premium layout.
 
 </td>
@@ -172,8 +173,8 @@ graph LR
 <td width="50%" valign="top">
 
 ### ⚡ Smart Execution
+- **CLI Control (`argparse`)**: Trigger the platform silently or with a specified configuration (e.g., `python src/qr.py --theme matrix`).
 - **High Error-Correction**: Defaults to `ERROR_CORRECT_H` ensuring scannability even with complex gradients.
-- **Format Intelligence**: Extracts specific strings to form proper WhatsApp URIs or SMS templates.
 - **Crash Prevention Layer**: Checks for empty modules, null inputs, and unexpected exceptions instantly.
 
 </td>
