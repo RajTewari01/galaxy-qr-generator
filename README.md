@@ -7,6 +7,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-00F7FF?style=for-the-badge)](LICENSE)
 [![CI](https://img.shields.io/badge/CI-Passing-00FF41?style=for-the-badge&logo=githubactions&logoColor=white)](.github/workflows/build.yml)
 
+<br/><br/>
+
+<img src="assets/FB_IMG_1689014479453.jpg" width="180" style="border-radius: 20px; box-shadow: 0px 4px 20px rgba(0, 255, 65, 0.2);"/>
+
 </div>
 
 ---

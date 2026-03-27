@@ -36,6 +36,7 @@ exe = EXE(
     a.datas,
     [],
     name='GalaxyQR',
+    icon='assets/icon.ico',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -54,7 +55,7 @@ if sys.platform == 'darwin':
     app = BUNDLE(
         exe,
         name='GalaxyQR.app',
-        icon=None,
+        icon='assets/icon.ico',
         bundle_identifier=None,
         info_plist={
             'NSHighResolutionCapable': 'True',
