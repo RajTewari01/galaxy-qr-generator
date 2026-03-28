@@ -1,4 +1,3 @@
-import sys
 import platform
 import os
 from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
@@ -29,7 +28,12 @@ class GalaxyWindow(QMainWindow):
         self.colors = [QColor("#ffffff"), QColor("#00f260"), QColor("#0575e6")]
 
         # Set official app icon
-        icon_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'assets', 'icon.ico'))
+        icon_path = os.path.abspath(
+            os.path.join(
+                os.path.dirname(__file__),
+                '..',
+                'assets',
+                'icon.ico'))
         if os.path.exists(icon_path):
             self.setWindowIcon(QIcon(icon_path))
 
@@ -44,17 +48,19 @@ class GalaxyWindow(QMainWindow):
         # ── Desktop Window Background ────────────────────
         self.central_widget = QWidget(self)
         self.central_widget.setObjectName("CentralWidget")
-        
+
         bg_hex = self.theme.get("bg", "#121219")
-        bg_rgba = "rgba(30, 30, 35, 0.45)" # fallback
+        bg_rgba = "rgba(30, 30, 35, 0.45)"  # fallback
         if bg_hex.startswith("#") and len(bg_hex) == 7:
-            r, g, b = int(bg_hex[1:3], 16), int(bg_hex[3:5], 16), int(bg_hex[5:7], 16)
+            r, g, b = int(bg_hex[1:3], 16), int(
+                bg_hex[3:5], 16), int(bg_hex[5:7], 16)
             bg_rgba = f"rgba({r}, {g}, {b}, 0.55)"
 
-        # This acts as the translucent tint layer that the OS blur renders behind
+        # This acts as the translucent tint layer that the OS blur renders
+        # behind
         self.central_widget.setStyleSheet(f"""
             QWidget#CentralWidget {{
-                background-color: {bg_rgba}; 
+                background-color: {bg_rgba};
                 border-radius: 12px;
                 border: 1px solid rgba(255, 255, 255, 0.1);
             }}
@@ -126,7 +132,8 @@ class GalaxyWindow(QMainWindow):
         # Gradient
         self.left_layout.addWidget(self._section_label("Gradient Engine"))
         self.combo_grad = QComboBox()
-        self.combo_grad.addItems(["Radial", "Vertical", "Horizontal", "Square"])
+        self.combo_grad.addItems(
+            ["Radial", "Vertical", "Horizontal", "Square"])
         self.combo_grad.setStyleSheet(self._combo_style())
         self.combo_grad.setFixedHeight(30)
         self.left_layout.addWidget(self.combo_grad)
@@ -150,7 +157,7 @@ class GalaxyWindow(QMainWindow):
         self.left_layout.addLayout(btn_row)
 
         self.left_layout.addSpacing(8)
-        
+
         # Separator
         line = QFrame()
         line.setFrameShape(QFrame.HLine)
@@ -165,7 +172,7 @@ class GalaxyWindow(QMainWindow):
         self.input_layout.setContentsMargins(0, 0, 0, 0)
         self.input_layout.setSpacing(8)
         self.input_layout.setAlignment(Qt.AlignTop)
-        
+
         # Scroll area for many inputs
         self.input_scroll = QScrollArea()
         self.input_scroll.setWidgetResizable(True)
@@ -177,7 +184,7 @@ class GalaxyWindow(QMainWindow):
             QScrollBar::handle:vertical { background: rgba(255,255,255,0.2); border-radius: 2px; }
             QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { height: 0; }
         """)
-        
+
         self.left_layout.addWidget(self.input_scroll)
 
     # ─────────────────────────────────────────────────────
@@ -185,11 +192,12 @@ class GalaxyWindow(QMainWindow):
     # ─────────────────────────────────────────────────────
     def _build_right_panel(self):
         from PyQt5.QtWidgets import QSizePolicy
-        
+
         # Expanded preview to fill the full boxed space
         self.preview_lbl = QLabel()
         self.preview_lbl.setAlignment(Qt.AlignCenter)
-        self.preview_lbl.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.preview_lbl.setSizePolicy(
+            QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.preview_lbl.setMinimumSize(250, 250)
         self.preview_lbl.setStyleSheet("""
             QLabel {
@@ -212,7 +220,7 @@ class GalaxyWindow(QMainWindow):
         self.btn_gen.clicked.connect(self.generate)
         btn_row.addWidget(self.btn_gen)
         btn_row.addStretch()
-        
+
         self.right_layout.addLayout(btn_row)
 
     # ─────────────────────────────────────────────────────
@@ -232,12 +240,15 @@ class GalaxyWindow(QMainWindow):
 
     def _combo_style(self):
         hover_col = "rgba(0, 0, 0, 0.3)"
-        
+
         # Get theme accent specifically for focus/selection highlighting
         accent = self.theme.get("accent_grad", "#0A84FF")
         if "qlineargradient" in accent:
-            accent_border = "#0A84FF" # Fallback since you can't border-solid a linear grad directly easily
-            if "stop:1 " in accent: accent_border = accent.split("stop:1 ")[1][:7]
+            # Fallback since you can't border-solid a linear grad directly
+            # easily
+            accent_border = "#0A84FF"
+            if "stop:1 " in accent:
+                accent_border = accent.split("stop:1 ")[1][:7]
         else:
             accent_border = accent
 
@@ -250,11 +261,11 @@ class GalaxyWindow(QMainWindow):
                 color: rgba(255,255,255, 0.9);
                 padding: 0px 8px;
                 border-radius: 6px;
-                font-family: {{FONT}};
+                font-family: {FONT};
                 font-size: 13px;
             }}
             QComboBox:hover {{
-                background-color: {{hover_col}};
+                background-color: {hover_col};
             }}
             QComboBox::drop-down {{
                 border: none;
@@ -269,7 +280,7 @@ class GalaxyWindow(QMainWindow):
                 border: 1px solid rgba(0, 0, 0, 0.8);
                 border-radius: 8px;
                 color: white;
-                selection-background-color: {{accent_border}};
+                selection-background-color: {accent_border};
                 padding: 4px;
                 outline: 0;
             }}
@@ -279,15 +290,17 @@ class GalaxyWindow(QMainWindow):
                 min-height: 22px;
             }}
             QComboBox QAbstractItemView::item:hover {{
-                background-color: {{accent_border}};
+                background-color: {accent_border};
             }}
         """
 
     def _input_style(self):
         accent = self.theme.get("accent_grad", "#0A84FF")
         if "qlineargradient" in accent:
-            if "stop:1 " in accent: accent = accent.split("stop:1 ")[1][:7]
-            else: accent = "#0A84FF"
+            if "stop:1 " in accent:
+                accent = accent.split("stop:1 ")[1][:7]
+            else:
+                accent = "#0A84FF"
 
         return f"""
             QLineEdit {{
@@ -298,15 +311,15 @@ class GalaxyWindow(QMainWindow):
                 color: rgba(255,255,255, 0.9);
                 padding: 4px 10px;
                 border-radius: 6px;
-                font-family: {{FONT}};
+                font-family: {FONT};
                 font-size: 13px;
-                selection-background-color: {{accent}};
+                selection-background-color: {accent};
             }}
             QLineEdit:hover {{
                 background-color: rgba(0, 0, 0, 0.3);
             }}
             QLineEdit:focus {{
-                border: 2px solid {{accent}};
+                border: 2px solid {accent};
                 background-color: rgba(0, 0, 0, 0.1);
                 padding: 3px 9px;
             }}
@@ -329,7 +342,8 @@ class GalaxyWindow(QMainWindow):
             r, g, b = color.red(), color.green(), color.blue()
         else:
             hex_col = str(color)
-            r, g, b = int(hex_col[1:3], 16), int(hex_col[3:5], 16), int(hex_col[5:7], 16)
+            r, g, b = int(hex_col[1:3], 16), int(
+                hex_col[3:5], 16), int(hex_col[5:7], 16)
 
         btn.setStyleSheet(f"""
             QPushButton {{
@@ -349,11 +363,13 @@ class GalaxyWindow(QMainWindow):
 
     def _pick_color(self, idx, btn):
         dialog = QColorDialog(self.colors[idx], self)
-        
+
         # Add Apple macOS specific dialog styling properties if possible
         dialog.setOption(QColorDialog.ShowAlphaChannel, False)
-        dialog.setOption(QColorDialog.DontUseNativeDialog, False) # Let OS render the color wheel
-        
+        dialog.setOption(
+            QColorDialog.DontUseNativeDialog,
+            False)  # Let OS render the color wheel
+
         if dialog.exec_() == QColorDialog.Accepted:
             c = dialog.selectedColor()
             self.colors[idx] = c
@@ -373,8 +389,8 @@ class GalaxyWindow(QMainWindow):
         for f in fields:
             row = QVBoxLayout()
             row.setSpacing(4)
-            row.setContentsMargins(0,0,0,0)
-            
+            row.setContentsMargins(0, 0, 0, 0)
+
             lbl = QLabel(f)
             lbl.setStyleSheet(f"""
                 color: rgba(255, 255, 255, 0.75);
@@ -391,10 +407,10 @@ class GalaxyWindow(QMainWindow):
             entry.setFixedHeight(30)
             entry.setStyleSheet(self._input_style())
             row.addWidget(entry)
-            
+
             self.input_layout.addLayout(row)
             self.current_entries.append(entry)
-            
+
         self.input_layout.addStretch()
 
     def generate(self):
@@ -406,11 +422,16 @@ class GalaxyWindow(QMainWindow):
         pil_img = self.logic.generate_image(data_str, grad, self.colors)
 
         im_data = pil_img.convert("RGBA").tobytes("raw", "RGBA")
-        qim = QImage(im_data, pil_img.size[0], pil_img.size[1], QImage.Format_RGBA8888)
+        qim = QImage(
+            im_data,
+            pil_img.size[0],
+            pil_img.size[1],
+            QImage.Format_RGBA8888)
         pix = QPixmap.fromImage(qim)
 
         sz = min(self.preview_lbl.width(), self.preview_lbl.height()) - 30
-        if sz < 150: sz = 240 
+        if sz < 150:
+            sz = 240
 
         self.preview_lbl.setPixmap(
             pix.scaled(sz, sz, Qt.KeepAspectRatio, Qt.SmoothTransformation)

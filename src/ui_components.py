@@ -73,7 +73,7 @@ class CustomTitleBar(QWidget):
         self.layout_box.addStretch()
         self.layout_box.addWidget(self.title_label)
         self.layout_box.addStretch()
-        self.layout_box.addSpacing(56) # Keep label dead center
+        self.layout_box.addSpacing(56)  # Keep label dead center
 
         self._is_tracking = False
         self._start_pos = None
@@ -104,7 +104,7 @@ class GlassPanel(QFrame):
     def __init__(self, theme, parent=None):
         super().__init__(parent)
         self.setObjectName("GlassPanel")
-        
+
         panel_col = theme.get("panel", "#141419")
         if panel_col.startswith("#") and len(panel_col) == 7:
             r = int(panel_col[1:3], 16)
@@ -123,7 +123,7 @@ class GlassPanel(QFrame):
                 border-radius: 12px;
             }}
         """)
-        
+
         # Soft environmental shadow
         shadow = QGraphicsDropShadowEffect(self)
         shadow.setBlurRadius(40)
@@ -139,10 +139,10 @@ class PrimaryButton(QPushButton):
         super().__init__(text, parent)
         self.setCursor(Qt.PointingHandCursor)
         self.setFixedHeight(36)
-        
+
         accent = theme.get("accent_grad", "#0A84FF")
         hover = theme.get("accent_hover", "#1A8CFF")
-        
+
         shadow_hex = "#0A84FF"
         if accent.startswith("#"):
             shadow_hex = accent
@@ -169,7 +169,7 @@ class PrimaryButton(QPushButton):
                 background: {accent};
             }}
         """)
-        
+
         shadow = QGraphicsDropShadowEffect(self)
         shadow.setBlurRadius(15)
         try:
@@ -177,7 +177,7 @@ class PrimaryButton(QPushButton):
             g = int(shadow_hex[3:5], 16)
             b = int(shadow_hex[5:7], 16)
             shadow.setColor(QColor(r, g, b, 80))
-        except:
+        except Exception:
             shadow.setColor(QColor(10, 132, 255, 80))
         shadow.setOffset(0, 4)
         self.setGraphicsEffect(shadow)
