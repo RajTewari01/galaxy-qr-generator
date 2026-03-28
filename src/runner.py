@@ -3,7 +3,7 @@ import os
 from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
                              QLabel, QComboBox, QLineEdit, QPushButton,
                              QColorDialog, QScrollArea, QFrame)
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QPixmap, QImage, QIcon
 from themes import THEMES
 from engine import QrLogic, INPUT_MAP

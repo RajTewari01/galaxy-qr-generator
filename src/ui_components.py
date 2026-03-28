@@ -5,7 +5,8 @@ from PyQt5.QtGui import QColor, QMouseEvent
 
 
 # ── Apple premium font stack ──────────────────────────────────
-FONT = '".AppleSystemUIFont", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif'
+FONT = ('".AppleSystemUIFont", -apple-system, BlinkMacSystemFont, '
+        '"SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif')
 
 
 class TrafficLightButton(QPushButton):
@@ -60,7 +61,7 @@ class CustomTitleBar(QWidget):
         self.layout_box.addSpacing(8)
         self.layout_box.addWidget(self.btn_max)
 
-        self.title_label = QLabel(f"Galaxy QR Core", self)
+        self.title_label = QLabel("Galaxy QR Core", self)
         self.title_label.setStyleSheet(f"""
             color: rgba(255, 255, 255, 0.7);
             font-weight: 500;
