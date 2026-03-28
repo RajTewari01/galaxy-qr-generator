@@ -1,10 +1,13 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QLineEdit
+from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
+                             QLabel, QComboBox, QLineEdit, QPushButton,
+                             QColorDialog)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QPixmap, QImage
 from themes import THEMES
 from engine import QrLogic, INPUT_MAP
-from ui_components import CustomTitleBar, GlassFrame, NeonButton
+from ui_components import CustomTitleBar, MacContainer, PrimaryButton, FONT
+
 
 class GalaxyWindow(QMainWindow):
     def __init__(self, theme_key):
@@ -12,196 +15,318 @@ class GalaxyWindow(QMainWindow):
         self.theme = THEMES.get(theme_key, THEMES["apple-dark"])
         self.theme_key = theme_key
         self.logic = QrLogic()
-        self.colors = [QColor("white"), QColor("#00f260"), QColor("#0575e6")] 
-        
+        self.colors = [QColor("#ffffff"), QColor("#00f260"), QColor("#0575e6")]
+
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.Window)
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.resize(1000, 700)
+        self.resize(800, 560) # more standard mac window aspect ratio
 
+        # ── Central widget ───────────────────────────────
         self.central_widget = QWidget(self)
+        self.central_widget.setObjectName("CentralWidget")
         self.central_widget.setStyleSheet(f"""
             QWidget#CentralWidget {{
-                background-color: {self.theme['bg']};
-                border-radius: 12px;
-                border: 1px solid {self.theme['border']};
+                background-color: #282828; /* Standard macOS Dark Window Background */
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
             }}
         """)
-        self.central_widget.setObjectName("CentralWidget")
         self.setCentralWidget(self.central_widget)
-        
+
         self.main_layout = QVBoxLayout(self.central_widget)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
-        
+        self.main_layout.setSpacing(0)
+
+        # ── Title bar ────────────────────────────────────
         self.title_bar = CustomTitleBar(self, self.theme_key, self.theme)
         self.main_layout.addWidget(self.title_bar)
-        
-        self.main_h_layout = QHBoxLayout()
-        self.main_h_layout.addStretch()
-        
-        self.content_layout = QVBoxLayout()
-        self.content_layout.setContentsMargins(20, 10, 20, 30)
-        
-        self.glass_panel = GlassFrame(self.theme, self)
-        self.glass_panel.setMaximumWidth(960) 
-        self.glass_panel_layout = QHBoxLayout(self.glass_panel)
-        self.glass_panel_layout.setContentsMargins(30, 30, 30, 30)
-        self.glass_panel_layout.setSpacing(40)
-        
-        self.content_layout.addWidget(self.glass_panel)
-        
-        self.main_h_layout.addLayout(self.content_layout)
-        self.main_h_layout.addStretch()
-        self.main_layout.addLayout(self.main_h_layout)
-        
-        # LEFT PANEL
-        self.left_panel = QVBoxLayout()
-        title = QLabel(f"SYSTEM CONFIG | {self.theme_key.upper()}")
-        title.setStyleSheet(f"color: {self.theme['text']}; font-weight: 600; font-family: -apple-system; font-size: 13px; letter-spacing: 1px;")
-        self.left_panel.addWidget(title)
-        
-        lbl_mode = QLabel("Data Protocol")
-        lbl_mode.setStyleSheet(f"color: {self.theme['text_dim']}; margin-top: 10px; font-family: -apple-system;")
-        self.left_panel.addWidget(lbl_mode)
-        
-        self.combo_mode = QComboBox()
-        self.combo_mode.addItems(INPUT_MAP.keys())
-        self.combo_mode.setStyleSheet(self.get_input_style())
-        self.combo_mode.currentIndexChanged.connect(self.update_inputs)
-        self.left_panel.addWidget(self.combo_mode)
-        
-        lbl_grad = QLabel("Gradient Field")
-        lbl_grad.setStyleSheet(f"color: {self.theme['text_dim']}; margin-top: 10px; font-family: -apple-system;")
-        self.left_panel.addWidget(lbl_grad)
-        
-        self.combo_grad = QComboBox()
-        self.combo_grad.addItems(["Radial", "Vertical", "Horizontal", "Square"])
-        self.combo_grad.setStyleSheet(self.get_input_style())
-        self.left_panel.addWidget(self.combo_grad)
 
-        lbl_col = QLabel("Visual Spectrum")
-        lbl_col.setStyleSheet(f"color: {self.theme['text_dim']}; margin-top: 10px; font-family: -apple-system;")
-        self.left_panel.addWidget(lbl_col)
-        
-        btn_layout = QHBoxLayout()
-        
-        # We need a color dialog implementation or skip it.
-        # Implemented simplified color picking in logic or inline.
-        from PyQt5.QtWidgets import QColorDialog
-        
-        def pick_col(idx, b):
-            c = QColorDialog.getColor(self.colors[idx], self)
-            if c.isValid():
-                self.colors[idx] = c
-                txt = "black" if (c.red()*0.299 + c.green()*0.587 + c.blue()*0.114) > 186 else "white"
-                b.setStyleSheet(f"background-color: {c.name()}; color: {txt}; font-weight: 600; font-family: -apple-system; border-radius: 8px; border: none;")
+        # ── Content area ─────────────────────────────────
+        content_wrapper = QHBoxLayout()
+        content_wrapper.setContentsMargins(20, 20, 20, 20)
 
-        self.btn_bg = QPushButton("BG")
-        self.btn_c = QPushButton("Core")
-        self.btn_e = QPushButton("Edge")
-        
-        for idx, btn in enumerate([self.btn_bg, self.btn_c, self.btn_e]):
-            btn.setFixedHeight(35)
-            btn.setStyleSheet(f"background-color: {self.colors[idx].name()}; color: black; font-weight: 600; font-family: -apple-system; border-radius: 8px; border: none;")
-            btn.setCursor(Qt.PointingHandCursor)
-            
-        self.btn_bg.clicked.connect(lambda _, b=self.btn_bg: pick_col(0, b))
-        self.btn_c.clicked.connect(lambda _, b=self.btn_c: pick_col(1, b))
-        self.btn_e.clicked.connect(lambda _, b=self.btn_e: pick_col(2, b))
-        
-        btn_layout.addWidget(self.btn_bg)
-        btn_layout.addWidget(self.btn_c)
-        btn_layout.addWidget(self.btn_e)
-        
-        self.left_panel.addLayout(btn_layout)
-        self.left_panel.addStretch()
-        self.glass_panel_layout.addLayout(self.left_panel, 40)
-        
-        # RIGHT PANEL
-        self.right_panel = QVBoxLayout()
-        self.input_widget = QWidget()
-        self.input_layout = QVBoxLayout(self.input_widget)
-        self.input_layout.setContentsMargins(0,0,0,0)
-        self.right_panel.addWidget(self.input_widget)
-        
-        self.preview_lbl = QLabel()
-        self.preview_lbl.setAlignment(Qt.AlignCenter)
-        self.preview_lbl.setStyleSheet(f"""
-            QLabel {{
-                background-color: {self.theme['bg']};
-                border: 1px solid {self.theme['border']};
-                border-radius: 12px;
-            }}
-        """)
-        self.preview_lbl.setMinimumSize(320, 320)
-        self.right_panel.addWidget(self.preview_lbl)
-        
-        self.right_panel.addSpacing(20)
-        
-        self.btn_gen = NeonButton("INITIALIZE GENERATION", self.theme)
-        self.btn_gen.clicked.connect(self.generate)
-        self.right_panel.addWidget(self.btn_gen)
-        
-        self.glass_panel_layout.addLayout(self.right_panel, 60)
+        # Wrap everything in macOS style grouped container
+        self.mac_panel = MacContainer(self)
+        self.mac_layout = QHBoxLayout(self.mac_panel)
+        self.mac_layout.setContentsMargins(24, 24, 24, 24)
+        self.mac_layout.setSpacing(32)
+
+        content_wrapper.addWidget(self.mac_panel)
+        self.main_layout.addLayout(content_wrapper)
+
+        # ── Left panel ───────────────────────────────────
+        self._build_left_panel()
+
+        # ── Right panel ──────────────────────────────────
+        self._build_right_panel()
 
         self.update_inputs()
 
-    def get_input_style(self):
-        return f"""
-            QWidget {{
-                background-color: {self.theme['input_bg']};
-                border: 1px solid {self.theme['border']};
-                color: {self.theme['text']};
-                padding: 10px;
+    # ─────────────────────────────────────────────────────
+    #  Left panel: config controls
+    # ─────────────────────────────────────────────────────
+    def _build_left_panel(self):
+        left = QVBoxLayout()
+        left.setSpacing(12)
+        left.setContentsMargins(0, 0, 0, 0)
+        left.setAlignment(Qt.AlignTop)
+
+        # Protocol selector
+        left.addWidget(self._section_label("Protocol"))
+        self.combo_mode = QComboBox()
+        self.combo_mode.addItems(INPUT_MAP.keys())
+        self.combo_mode.setStyleSheet(self._combo_style())
+        self.combo_mode.setFixedHeight(26)
+        self.combo_mode.currentIndexChanged.connect(self.update_inputs)
+        left.addWidget(self.combo_mode)
+
+        # Gradient selector
+        left.addWidget(self._section_label("Gradient"))
+        self.combo_grad = QComboBox()
+        self.combo_grad.addItems(["Radial", "Vertical", "Horizontal", "Square"])
+        self.combo_grad.setStyleSheet(self._combo_style())
+        self.combo_grad.setFixedHeight(26)
+        left.addWidget(self.combo_grad)
+
+        # Colors
+        left.addWidget(self._section_label("Colors"))
+        btn_row = QHBoxLayout()
+        btn_row.setSpacing(8)
+
+        self.btn_bg = self._make_color_btn(0, "Background")
+        self.btn_c = self._make_color_btn(1, "Center")
+        self.btn_e = self._make_color_btn(2, "Edge")
+
+        btn_row.addWidget(self.btn_bg)
+        btn_row.addWidget(self.btn_c)
+        btn_row.addWidget(self.btn_e)
+        left.addLayout(btn_row)
+
+        self.mac_layout.addLayout(left, 45)
+
+    # ─────────────────────────────────────────────────────
+    #  Right panel: inputs, preview, generate
+    # ─────────────────────────────────────────────────────
+    def _build_right_panel(self):
+        right = QVBoxLayout()
+        right.setSpacing(16)
+        right.setContentsMargins(0, 0, 0, 0)
+        right.setAlignment(Qt.AlignTop)
+
+        self.input_widget = QWidget()
+        self.input_layout = QVBoxLayout(self.input_widget)
+        self.input_layout.setContentsMargins(0, 0, 0, 0)
+        self.input_layout.setSpacing(10)
+        right.addWidget(self.input_widget)
+
+        # QR preview
+        self.preview_lbl = QLabel()
+        self.preview_lbl.setAlignment(Qt.AlignCenter)
+        self.preview_lbl.setFixedSize(240, 240)
+        self.preview_lbl.setStyleSheet("""
+            QLabel {
+                background-color: #2D2D2D;
+                border: 1px solid rgba(255, 255, 255, 0.05);
                 border-radius: 8px;
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI";
+            }
+        """)
+
+        preview_row = QHBoxLayout()
+        preview_row.addStretch()
+        preview_row.addWidget(self.preview_lbl)
+        preview_row.addStretch()
+        right.addLayout(preview_row)
+
+        # Generate button
+        btn_row = QHBoxLayout()
+        btn_row.addStretch()
+        self.btn_gen = PrimaryButton("Generate QR Code", self)
+        self.btn_gen.setMinimumWidth(120)
+        self.btn_gen.clicked.connect(self.generate)
+        btn_row.addWidget(self.btn_gen)
+        right.addLayout(btn_row)
+
+        self.mac_layout.addLayout(right, 55)
+
+    # ─────────────────────────────────────────────────────
+    #  Style helpers
+    # ─────────────────────────────────────────────────────
+    def _section_label(self, text):
+        lbl = QLabel(text)
+        lbl.setStyleSheet(f"""
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 11px;
+            font-weight: 500;
+            font-family: {FONT};
+            padding-top: 8px;
+        """)
+        return lbl
+
+    def _combo_style(self):
+        # Precise macOS native look for combobox
+        return f"""
+            QComboBox {{
+                background-color: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(0, 0, 0, 0.5);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                color: white;
+                padding: 0px 8px;
+                border-radius: 5px;
+                font-family: {FONT};
                 font-size: 13px;
             }}
-            QWidget:focus {{
-                border: 1px solid {self.theme.get('accent_hover', '#fff')};
+            QComboBox:hover {{
+                background-color: rgba(255, 255, 255, 0.15);
             }}
-            QComboBox::drop-down {{ border: none; }}
+            QComboBox::drop-down {{
+                border: none;
+                width: 20px;
+                subcontrol-position: right center;
+            }}
+            QComboBox::down-arrow {{
+                image: none;
+                width: 0;
+            }}
             QComboBox QAbstractItemView {{
-                background-color: {self.theme['bg']};
-                border: 1px solid {self.theme['border']};
-                border-radius: 8px;
-                color: {self.theme['text']};
-                selection-background-color: rgba(255,255,255,0.1);
+                background-color: #2D2D2D;
+                border: 1px solid rgba(0, 0, 0, 0.7);
+                border-radius: 5px;
+                color: white;
+                selection-background-color: #0A84FF;
+                padding: 2px;
+                outline: 0;
+            }}
+            QComboBox QAbstractItemView::item {{
+                padding: 4px 8px;
+                border-radius: 3px;
+                min-height: 20px;
+            }}
+            QComboBox QAbstractItemView::item:hover {{
+                background-color: #0A84FF;
+                color: white;
             }}
         """
 
+    def _input_style(self):
+        # macOS input fields
+        return f"""
+            QLineEdit {{
+                background-color: rgba(255, 255, 255, 0.05); /* inset look */
+                border: 1px solid rgba(0, 0, 0, 0.5);
+                border-top: 1px solid rgba(0, 0, 0, 0.8);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                color: white;
+                padding: 2px 6px;
+                border-radius: 5px;
+                font-family: {FONT};
+                font-size: 13px;
+                selection-background-color: #0A84FF;
+            }}
+            QLineEdit:hover {{
+                background-color: rgba(255, 255, 255, 0.08);
+            }}
+            QLineEdit:focus {{
+                border: 2px solid #0A84FF;
+                background-color: rgba(255, 255, 255, 0.08);
+                padding: 1px 5px;
+            }}
+            QLineEdit::placeholder {{
+                color: rgba(255, 255, 255, 0.3);
+            }}
+        """
+
+    # ─────────────────────────────────────────────────────
+    #  Color picker buttons
+    # ─────────────────────────────────────────────────────
+    def _make_color_btn(self, idx, label):
+        btn = QPushButton()
+        btn.setFixedHeight(24)
+        btn.setCursor(Qt.PointingHandCursor)
+        self._apply_color_btn_style(btn, self.colors[idx])
+        btn.clicked.connect(lambda _, b=btn, i=idx: self._pick_color(i, b))
+        return btn
+
+    def _apply_color_btn_style(self, btn, color):
+        if isinstance(color, QColor):
+            r, g, b = color.red(), color.green(), color.blue()
+        else:
+            hex_col = str(color)
+            r = int(hex_col[1:3], 16)
+            g = int(hex_col[3:5], 16)
+            b = int(hex_col[5:7], 16)
+
+        # macOS standard buttons have light border, semi-transparent top, dark transparent shadow
+        btn.setStyleSheet(f"""
+            QPushButton {{
+                background-color: rgba({r}, {g}, {b}, 1.0);
+                border: 1px solid rgba(0, 0, 0, 0.3);
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 4px;
+            }}
+            QPushButton:hover {{
+                border: 1px solid rgba(255, 255, 255, 0.6);
+            }}
+            QPushButton:pressed {{
+                background-color: rgba({r}, {g}, {b}, 0.8);
+            }}
+        """)
+
+    def _pick_color(self, idx, btn):
+        c = QColorDialog.getColor(self.colors[idx], self)
+        if c.isValid():
+            self.colors[idx] = c
+            self._apply_color_btn_style(btn, c)
+
+    # ─────────────────────────────────────────────────────
+    #  Dynamic input fields
+    # ─────────────────────────────────────────────────────
     def update_inputs(self):
-        for i in reversed(range(self.input_layout.count())): 
+        for i in reversed(range(self.input_layout.count())):
             w = self.input_layout.itemAt(i).widget()
             if w:
                 w.setParent(None)
-        
+
         mode = self.combo_mode.currentText()
         fields = INPUT_MAP.get(mode, ["Input"])
-        
+
         self.current_entries = []
         for f in fields:
-            l = QLabel(f.upper())
-            l.setStyleSheet(f"color: {self.theme['text_dim']}; font-size: 10px; font-weight: 600; font-family: -apple-system; margin-top: 5px; letter-spacing: 0.5px;")
-            self.input_layout.addWidget(l)
+            row = QVBoxLayout()
+            row.setSpacing(4)
             
-            e = QLineEdit()
-            e.setPlaceholderText(f"Enter {f}...")
-            e.setStyleSheet(self.get_input_style())
-            self.input_layout.addWidget(e)
-            self.current_entries.append(e)
-        
-        self.right_panel.addStretch()
+            lbl = QLabel(f)
+            lbl.setStyleSheet(f"""
+                color: rgba(255, 255, 255, 0.85);
+                font-size: 13px;
+                font-weight: 400;
+                font-family: {FONT};
+            """)
+            row.addWidget(lbl)
 
+            entry = QLineEdit()
+            entry.setPlaceholderText("...")
+            entry.setFixedHeight(26)
+            entry.setStyleSheet(self._input_style())
+            row.addWidget(entry)
+            
+            self.input_layout.addLayout(row)
+            self.current_entries.append(entry)
+
+    # ─────────────────────────────────────────────────────
+    #  QR generation
+    # ─────────────────────────────────────────────────────
     def generate(self):
         inputs = [e.text() for e in self.current_entries]
         mode = self.combo_mode.currentText()
         grad = self.combo_grad.currentText()
-        
+
         data_str = self.logic.format_data(mode, inputs)
         pil_img = self.logic.generate_image(data_str, grad, self.colors)
-        
+
         im_data = pil_img.convert("RGBA").tobytes("raw", "RGBA")
         qim = QImage(im_data, pil_img.size[0], pil_img.size[1], QImage.Format_RGBA8888)
         pix = QPixmap.fromImage(qim)
-        
-        self.preview_lbl.setPixmap(pix.scaled(320, 320, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+
+        self.preview_lbl.setPixmap(
+            pix.scaled(240, 240, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        )
