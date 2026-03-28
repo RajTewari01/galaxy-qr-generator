@@ -30,24 +30,24 @@
 <div align="center">
   <table>
     <tr>
-      <td width="50%"><img src="proofs/image.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
-      <td width="50%"><img src="proofs/image copy.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td width="50%"><img src="proofs/theme-apple-dark.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td width="50%"><img src="proofs/theme-dracula.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
     </tr>
     <tr>
-      <td><img src="proofs/image copy 2.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
-      <td><img src="proofs/image copy 3.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img src="proofs/theme-neon-cyber.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img src="proofs/theme-solarized.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
     </tr>
     <tr>
-      <td><img src="proofs/image copy 4.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
-      <td><img src="proofs/crimson.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img src="proofs/theme-ocean.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img src="proofs/theme-crimson.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
     </tr>
     <tr>
-      <td><img src="proofs/matrix.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
-      <td><img src="proofs/monokai.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img src="proofs/theme-matrix.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img src="proofs/theme-monokai.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
     </tr>
     <tr>
-      <td><img src="proofs/nord.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
-      <td><img src="proofs/synthwave.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img src="proofs/theme-nord.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img src="proofs/theme-synthwave.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
     </tr>
   </table>
   <br/>
