@@ -101,14 +101,23 @@ class CustomTitleBar(QWidget):
 class GlassPanel(QFrame):
     """Premium frosted glass panel with mirror border."""
 
-    def __init__(self, parent=None):
+    def __init__(self, theme, parent=None):
         super().__init__(parent)
         self.setObjectName("GlassPanel")
         
-        # Apple mirror glass aesthetic: very subtle translucent fill, glossy inner border
+        panel_col = theme.get("panel", "#141419")
+        if panel_col.startswith("#") and len(panel_col) == 7:
+            r = int(panel_col[1:3], 16)
+            g = int(panel_col[3:5], 16)
+            b = int(panel_col[5:7], 16)
+            bg_col = f"rgba({r}, {g}, {b}, 0.45)"
+        else:
+            bg_col = "rgba(20, 20, 25, 0.45)"
+
+        # Apple mirror glass aesthetic tinted by theme
         self.setStyleSheet(f"""
             QFrame#GlassPanel {{
-                background-color: rgba(20, 20, 25, 0.45);
+                background-color: {bg_col};
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 border-top: 1px solid rgba(255, 255, 255, 0.2);
                 border-radius: 12px;
@@ -126,15 +135,24 @@ class GlassPanel(QFrame):
 class PrimaryButton(QPushButton):
     """Premium macOS generic generation button."""
 
-    def __init__(self, text, parent=None):
+    def __init__(self, text, theme, parent=None):
         super().__init__(text, parent)
         self.setCursor(Qt.PointingHandCursor)
         self.setFixedHeight(36)
         
-        # Apple SF Pro Blue Gradient style
+        accent = theme.get("accent_grad", "#0A84FF")
+        hover = theme.get("accent_hover", "#1A8CFF")
+        
+        shadow_hex = "#0A84FF"
+        if accent.startswith("#"):
+            shadow_hex = accent
+        elif "stop:1 " in accent:
+            shadow_hex = accent.split("stop:1 ")[1][:7]
+
+        # Theme-aware Apple Glass Gradient style
         self.setStyleSheet(f"""
             QPushButton {{
-                background-color: #0A84FF;
+                background: {accent};
                 color: white;
                 font-weight: 600;
                 font-family: {FONT};
@@ -145,15 +163,21 @@ class PrimaryButton(QPushButton):
                 border-radius: 8px;
             }}
             QPushButton:hover {{
-                background-color: #1A8CFF;
+                background: {hover};
             }}
             QPushButton:pressed {{
-                background-color: #0074E8;
+                background: {accent};
             }}
         """)
         
         shadow = QGraphicsDropShadowEffect(self)
         shadow.setBlurRadius(15)
-        shadow.setColor(QColor(10, 132, 255, 80))
+        try:
+            r = int(shadow_hex[1:3], 16)
+            g = int(shadow_hex[3:5], 16)
+            b = int(shadow_hex[5:7], 16)
+            shadow.setColor(QColor(r, g, b, 80))
+        except:
+            shadow.setColor(QColor(10, 132, 255, 80))
         shadow.setOffset(0, 4)
         self.setGraphicsEffect(shadow)

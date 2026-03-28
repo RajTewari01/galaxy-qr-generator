@@ -45,10 +45,16 @@ class GalaxyWindow(QMainWindow):
         self.central_widget = QWidget(self)
         self.central_widget.setObjectName("CentralWidget")
         
+        bg_hex = self.theme.get("bg", "#121219")
+        bg_rgba = "rgba(30, 30, 35, 0.45)" # fallback
+        if bg_hex.startswith("#") and len(bg_hex) == 7:
+            r, g, b = int(bg_hex[1:3], 16), int(bg_hex[3:5], 16), int(bg_hex[5:7], 16)
+            bg_rgba = f"rgba({r}, {g}, {b}, 0.55)"
+
         # This acts as the translucent tint layer that the OS blur renders behind
         self.central_widget.setStyleSheet(f"""
             QWidget#CentralWidget {{
-                background-color: rgba(30, 30, 35, 0.45); 
+                background-color: {bg_rgba}; 
                 border-radius: 12px;
                 border: 1px solid rgba(255, 255, 255, 0.1);
             }}
@@ -70,7 +76,7 @@ class GalaxyWindow(QMainWindow):
         self.main_layout.addLayout(self.content_h_layout)
 
         # ── Panel 1 (Left): Configuration ────────────────
-        self.left_panel = GlassPanel(self)
+        self.left_panel = GlassPanel(self.theme, self)
         self.left_panel.setMinimumWidth(320)
         self.left_layout = QVBoxLayout(self.left_panel)
         self.left_layout.setContentsMargins(24, 24, 24, 24)
@@ -78,7 +84,7 @@ class GalaxyWindow(QMainWindow):
         self._build_left_panel()
 
         # ── Panel 2 (Right): Output & Action ─────────────
-        self.right_panel = GlassPanel(self)
+        self.right_panel = GlassPanel(self.theme, self)
         self.right_panel.setMinimumWidth(360)
         self.right_layout = QVBoxLayout(self.right_panel)
         self.right_layout.setContentsMargins(32, 32, 32, 32)
@@ -154,6 +160,7 @@ class GalaxyWindow(QMainWindow):
 
         # Dynamic Input Holder
         self.input_widget = QWidget()
+        self.input_widget.setStyleSheet("background: transparent;")
         self.input_layout = QVBoxLayout(self.input_widget)
         self.input_layout.setContentsMargins(0, 0, 0, 0)
         self.input_layout.setSpacing(8)
@@ -163,6 +170,7 @@ class GalaxyWindow(QMainWindow):
         self.input_scroll = QScrollArea()
         self.input_scroll.setWidgetResizable(True)
         self.input_scroll.setWidget(self.input_widget)
+        self.input_scroll.viewport().setStyleSheet("background: transparent;")
         self.input_scroll.setStyleSheet("""
             QScrollArea { border: none; background: transparent; }
             QScrollBar:vertical { width: 4px; background: transparent; }
@@ -176,9 +184,13 @@ class GalaxyWindow(QMainWindow):
     #  Right Panel: Clean Preview & Generate
     # ─────────────────────────────────────────────────────
     def _build_right_panel(self):
-        # Right aligned big preview
+        from PyQt5.QtWidgets import QSizePolicy
+        
+        # Expanded preview to fill the full boxed space
         self.preview_lbl = QLabel()
         self.preview_lbl.setAlignment(Qt.AlignCenter)
+        self.preview_lbl.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.preview_lbl.setMinimumSize(250, 250)
         self.preview_lbl.setStyleSheet("""
             QLabel {
                 background-color: rgba(0, 0, 0, 0.15);
@@ -189,18 +201,13 @@ class GalaxyWindow(QMainWindow):
             }
         """)
 
-        preview_row = QHBoxLayout()
-        preview_row.addStretch()
-        preview_row.addWidget(self.preview_lbl)
-        preview_row.addStretch()
-        self.right_layout.addLayout(preview_row)
-
-        self.right_layout.addStretch()
+        # Insert directly to act as an expanding cell
+        self.right_layout.addWidget(self.preview_lbl, 1)
 
         # Premium button
         btn_row = QHBoxLayout()
         btn_row.addStretch()
-        self.btn_gen = PrimaryButton("Generate QR Code", self)
+        self.btn_gen = PrimaryButton("Generate QR Code", self.theme, self)
         self.btn_gen.setMinimumWidth(160)
         self.btn_gen.clicked.connect(self.generate)
         btn_row.addWidget(self.btn_gen)
@@ -224,6 +231,16 @@ class GalaxyWindow(QMainWindow):
         return lbl
 
     def _combo_style(self):
+        hover_col = "rgba(0, 0, 0, 0.3)"
+        
+        # Get theme accent specifically for focus/selection highlighting
+        accent = self.theme.get("accent_grad", "#0A84FF")
+        if "qlineargradient" in accent:
+            accent_border = "#0A84FF" # Fallback since you can't border-solid a linear grad directly easily
+            if "stop:1 " in accent: accent_border = accent.split("stop:1 ")[1][:7]
+        else:
+            accent_border = accent
+
         return f"""
             QComboBox {{
                 background-color: rgba(0, 0, 0, 0.2);
@@ -233,11 +250,11 @@ class GalaxyWindow(QMainWindow):
                 color: rgba(255,255,255, 0.9);
                 padding: 0px 8px;
                 border-radius: 6px;
-                font-family: {FONT};
+                font-family: {{FONT}};
                 font-size: 13px;
             }}
             QComboBox:hover {{
-                background-color: rgba(0, 0, 0, 0.3);
+                background-color: {{hover_col}};
             }}
             QComboBox::drop-down {{
                 border: none;
@@ -252,7 +269,7 @@ class GalaxyWindow(QMainWindow):
                 border: 1px solid rgba(0, 0, 0, 0.8);
                 border-radius: 8px;
                 color: white;
-                selection-background-color: #0A84FF;
+                selection-background-color: {{accent_border}};
                 padding: 4px;
                 outline: 0;
             }}
@@ -262,11 +279,16 @@ class GalaxyWindow(QMainWindow):
                 min-height: 22px;
             }}
             QComboBox QAbstractItemView::item:hover {{
-                background-color: #0A84FF;
+                background-color: {{accent_border}};
             }}
         """
 
     def _input_style(self):
+        accent = self.theme.get("accent_grad", "#0A84FF")
+        if "qlineargradient" in accent:
+            if "stop:1 " in accent: accent = accent.split("stop:1 ")[1][:7]
+            else: accent = "#0A84FF"
+
         return f"""
             QLineEdit {{
                 background-color: rgba(0, 0, 0, 0.2);
@@ -276,15 +298,15 @@ class GalaxyWindow(QMainWindow):
                 color: rgba(255,255,255, 0.9);
                 padding: 4px 10px;
                 border-radius: 6px;
-                font-family: {FONT};
+                font-family: {{FONT}};
                 font-size: 13px;
-                selection-background-color: #0A84FF;
+                selection-background-color: {{accent}};
             }}
             QLineEdit:hover {{
                 background-color: rgba(0, 0, 0, 0.3);
             }}
             QLineEdit:focus {{
-                border: 2px solid #0A84FF;
+                border: 2px solid {{accent}};
                 background-color: rgba(0, 0, 0, 0.1);
                 padding: 3px 9px;
             }}

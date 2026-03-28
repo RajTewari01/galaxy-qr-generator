@@ -2,26 +2,110 @@
 
 ![Header](https://capsule-render.vercel.app/api?type=waving&color=0:121219,50:0575e6,100:00f260&height=220&section=header&text=Galaxy%20QR%20Core&fontSize=60&fontColor=fff&animation=fadeIn&fontAlignY=38&desc=Desktop%20QR%20Generator%20%E2%80%A2%2010%20Themes%20%E2%80%A2%2010%20Protocols%20%E2%80%A2%20Offline&descAlignY=58&descSize=16)
 
+[![CI Pipeline](https://github.com/RajTewari01/galaxy-qr-generator/actions/workflows/build.yml/badge.svg)](https://github.com/RajTewari01/galaxy-qr-generator/actions/workflows/build.yml)
+[![CodeQL](https://github.com/RajTewari01/galaxy-qr-generator/actions/workflows/codeql.yml/badge.svg)](https://github.com/RajTewari01/galaxy-qr-generator/actions/workflows/codeql.yml)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=FFD43B)](https://python.org)
 [![PyQt5](https://img.shields.io/badge/PyQt5-41CD52?style=for-the-badge&logo=qt&logoColor=white)](https://pypi.org/project/PyQt5/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-00F7FF?style=for-the-badge)](LICENSE)
-[![CI](https://img.shields.io/badge/CI-Passing-00FF41?style=for-the-badge&logo=githubactions&logoColor=white)](.github/workflows/build.yml)
+[![GitHub Release](https://img.shields.io/github/v/release/RajTewari01/galaxy-qr-generator?style=for-the-badge&color=00f260&label=Release)](https://github.com/RajTewari01/galaxy-qr-generator/releases)
+
+[![Stars](https://img.shields.io/github/stars/RajTewari01/galaxy-qr-generator?style=social)](https://github.com/RajTewari01/galaxy-qr-generator/stargazers)
+[![Forks](https://img.shields.io/github/forks/RajTewari01/galaxy-qr-generator?style=social)](https://github.com/RajTewari01/galaxy-qr-generator/network/members)
+[![Last Commit](https://img.shields.io/github/last-commit/RajTewari01/galaxy-qr-generator?color=00f260)](https://github.com/RajTewari01/galaxy-qr-generator/commits/main)
+[![Code Size](https://img.shields.io/github/languages/code-size/RajTewari01/galaxy-qr-generator?color=0575e6)](https://github.com/RajTewari01/galaxy-qr-generator)
+[![Issues](https://img.shields.io/github/issues/RajTewari01/galaxy-qr-generator?color=ff6b6b)](https://github.com/RajTewari01/galaxy-qr-generator/issues)
 
 <br/><br/>
 
 <img src="assets/FB_IMG_1689014479453.jpg" width="180" style="border-radius: 20px; box-shadow: 0px 4px 20px rgba(0, 255, 65, 0.2);"/>
 
+**A fully offline desktop QR code generator with gradient styling, rounded modules, and 10 hand-crafted UI themes.**
+
+[📖 Wiki](https://github.com/RajTewari01/galaxy-qr-generator/wiki) · [🐛 Report Bug](https://github.com/RajTewari01/galaxy-qr-generator/issues/new?template=bug_report.yml) · [✨ Request Feature](https://github.com/RajTewari01/galaxy-qr-generator/issues/new?template=feature_request.yml) · [📦 Releases](https://github.com/RajTewari01/galaxy-qr-generator/releases)
+
+</div>
+
+## 📸 Interface Preview & Themes
+
+<div align="center">
+  <table>
+    <tr>
+      <td width="50%"><img src="proofs/image.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td width="50%"><img src="proofs/image copy.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+    </tr>
+    <tr>
+      <td><img src="proofs/image copy 2.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img src="proofs/image copy 3.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+    </tr>
+    <tr>
+      <td><img src="proofs/image copy 4.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img src="proofs/crimson.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+    </tr>
+    <tr>
+      <td><img src="proofs/matrix.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img src="proofs/monokai.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+    </tr>
+    <tr>
+      <td><img src="proofs/nord.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img src="proofs/synthwave.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+    </tr>
+  </table>
+  <br/>
+  <em>Fully interactive Apple "Glassmorphism" design engine natively powered by PyQt5, adapting seamlessly to 10 unique themes.</em>
 </div>
 
 ---
 
-## Overview
+## ✨ Key Features
 
-Galaxy QR Core is a desktop application that generates styled QR codes with gradient color masks and rounded modules. It ships with **10 UI themes**, **10 data protocols**, and **4 gradient types** — all running 100% offline with zero network calls.
+<table>
+<tr>
+<td width="50%">
+
+### 🎨 10 Curated Themes
+Switch between Apple Dark, Dracula, Neon Cyber, Solarized, Ocean, Matrix, Synthwave, Monokai, Nord, and Crimson — all hand-crafted with matching accent gradients.
+
+</td>
+<td width="50%">
+
+### 🔌 10 Data Protocols
+Generate QR codes for URLs, Wi-Fi, vCards, SMS, Email, WhatsApp, YouTube, UPI payments, plain text, and geo-coordinates.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🌈 4 Gradient Types
+Apply Radial, Vertical, Horizontal, or Square gradient masks to your QR modules with full color customization.
+
+</td>
+<td width="50%">
+
+### 📡 100% Offline
+Zero network calls. No telemetry. No tracking. Everything runs locally on your machine.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🖥️ Cross-Platform
+Runs natively on Windows, macOS, and Linux. Pre-built executables available via [Releases](https://github.com/RajTewari01/galaxy-qr-generator/releases).
+
+</td>
+<td width="50%">
+
+### ⚡ Single Binary
+PyInstaller bundles everything into a standalone executable — no Python installation required for end users.
+
+</td>
+</tr>
+</table>
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
 The codebase is structured as a layered pipeline. Each module owns a single concern.
 
@@ -80,7 +164,7 @@ graph TD
 
 ---
 
-## Themes
+## 🎨 Themes
 
 <div align="center">
 
@@ -99,9 +183,11 @@ graph TD
 
 </div>
 
+> 💡 Want to add your own? See the [Contributing Guide](CONTRIBUTING.md#-adding-a-new-theme).
+
 ---
 
-## Quick Start
+## 🚀 Quick Start
 
 <details>
 <summary><strong>🪟 Windows</strong></summary>
@@ -152,7 +238,7 @@ python src/main.py --theme synthwave
 git clone https://github.com/RajTewari01/galaxy-qr-generator.git
 cd galaxy-qr-generator
 
-sudo apt-get update && sudo apt-get install -y python3-venv python3-pyqt5 libgl1-mesa-glx
+sudo apt-get update && sudo apt-get install -y python3-venv libgl1
 
 python3 -m venv venv
 source venv/bin/activate
@@ -170,7 +256,7 @@ python src/main.py --theme matrix
 
 ---
 
-## Building Executables
+## 📦 Building Executables
 
 <details>
 <summary><strong>🪟 Windows — produces <code>dist\GalaxyQR.exe</code></strong></summary>
@@ -205,11 +291,11 @@ pyinstaller UltimateQR.spec
 
 </details>
 
-> The CI pipeline (`.github/workflows/build.yml`) builds all three platforms automatically on push. Artifacts are retained for 7 days.
+> 🤖 The [CI pipeline](.github/workflows/build.yml) builds all three platforms on every push. Tag a version (`v1.x.x`) to trigger the [Release pipeline](.github/workflows/release.yml) which publishes binaries to [GitHub Releases](https://github.com/RajTewari01/galaxy-qr-generator/releases).
 
 ---
 
-## Supported Protocols
+## 🔌 Supported Protocols
 
 <div align="center">
 
@@ -230,7 +316,7 @@ pyinstaller UltimateQR.spec
 
 ---
 
-## CLI Reference
+## ⌨️ CLI Reference
 
 ```
 usage: main.py [-h] [--theme THEME]
@@ -245,29 +331,64 @@ choices: apple-dark, dracula, neon-cyber, solarized, ocean,
 
 ---
 
-## Dependencies
+## 📚 Dependencies
 
 | Package | Version | Role |
 |:--------|:--------|:-----|
 | `PyQt5` | ≥ 5.15.2 | GUI framework |
 | `qrcode[pil]` | ≥ 7.3 | QR generation engine |
 | `Pillow` | ≥ 9.0 | Image processing |
+| `BlurWindow` | ≥ 1.2.1 | Window blur effects |
 | `pyinstaller` | ≥ 6.0 | Executable packaging |
 
 ---
 
-## Contributing
+## 🔬 CI/CD Pipeline
 
-1. Fork → `git checkout -b feature/your-feature`
-2. Commit → `git commit -m "Add feature"`
-3. Push → `git push origin feature/your-feature`
-4. Open a Pull Request
+This project uses **6 automated GitHub Actions workflows**:
 
-New features go into the appropriate pipeline module. Keep concerns separated.
+| Workflow | Trigger | Purpose |
+|:---------|:--------|:--------|
+| [🔬 CI Pipeline](.github/workflows/build.yml) | Push / PR to `main` | Lint → Smoke Test → Cross-platform Build |
+| [🚀 Release](.github/workflows/release.yml) | `v*` tags | Build + Publish GitHub Release with binaries |
+| [🛡️ CodeQL](.github/workflows/codeql.yml) | Push + Weekly | Security vulnerability scanning |
+| [📖 Docs Quality](.github/workflows/docs.yml) | `.md` changes | Markdown lint + Link validation |
+| [📦 Dependency Review](.github/workflows/dependency-review.yml) | PRs | Audit new dependencies for vulnerabilities |
+| [🧹 Stale Cleanup](.github/workflows/stale.yml) | Daily | Auto-close inactive issues & PRs |
 
 ---
 
-## License
+## 🤝 Contributing
+
+We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) for:
+
+- Development setup
+- Code style & architecture rules
+- How to add themes and protocols
+- PR process & review expectations
+
+---
+
+## 🛡️ Security
+
+Found a vulnerability? Please see our [Security Policy](SECURITY.md) for responsible disclosure guidelines.
+
+---
+
+## 📖 Wiki
+
+For detailed documentation, visit the [Galaxy QR Core Wiki](https://github.com/RajTewari01/galaxy-qr-generator/wiki):
+
+- [🏠 Home](https://github.com/RajTewari01/galaxy-qr-generator/wiki) — Overview & quick links
+- [📥 Installation](https://github.com/RajTewari01/galaxy-qr-generator/wiki/Installation) — Platform-specific setup
+- [🎨 Themes](https://github.com/RajTewari01/galaxy-qr-generator/wiki/Themes) — Deep dive into all 10 themes
+- [🔌 Protocols](https://github.com/RajTewari01/galaxy-qr-generator/wiki/Protocols) — Protocol format specifications
+- [🏗️ Architecture](https://github.com/RajTewari01/galaxy-qr-generator/wiki/Architecture) — Module design & data flow
+- [❓ FAQ](https://github.com/RajTewari01/galaxy-qr-generator/wiki/FAQ) — Common issues & solutions
+
+---
+
+## 📄 License
 
 [MIT](LICENSE) — Biswadeep Tewari, 2024–2026.
 
@@ -276,6 +397,8 @@ New features go into the appropriate pipeline module. Keep concerns separated.
 <div align="center">
 
 **Built by [Biswadeep Tewari](https://github.com/RajTewari01)** · [tewari765@gmail.com](mailto:tewari765@gmail.com)
+
+⭐ Star this repo if you find it useful!
 
 ![Footer](https://capsule-render.vercel.app/api?type=waving&color=0:121219,50:0575e6,100:00f260&height=120&section=footer)
 
