@@ -69,24 +69,24 @@ This application is strictly optimized to execute seamlessly on low-tier, non-GP
 <div align="center">
   <table>
     <tr>
-      <td width="50%"><img src="proofs/theme-apple-dark.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
-      <td width="50%"><img src="proofs/theme-dracula.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td width="50%"><img alt="Apple Dark Theme" src="proofs/theme-apple-dark.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td width="50%"><img alt="Dracula Theme" src="proofs/theme-dracula.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
     </tr>
     <tr>
-      <td><img src="proofs/theme-neon-cyber.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
-      <td><img src="proofs/theme-solarized.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img alt="Neon Cyber Theme" src="proofs/theme-neon-cyber.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img alt="Solarized Theme" src="proofs/theme-solarized.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
     </tr>
     <tr>
-      <td><img src="proofs/theme-ocean.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
-      <td><img src="proofs/theme-crimson.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img alt="Ocean Theme" src="proofs/theme-ocean.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img alt="Crimson Theme" src="proofs/theme-crimson.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
     </tr>
     <tr>
-      <td><img src="proofs/theme-matrix.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
-      <td><img src="proofs/theme-monokai.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img alt="Matrix Theme" src="proofs/theme-matrix.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img alt="Monokai Theme" src="proofs/theme-monokai.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
     </tr>
     <tr>
-      <td><img src="proofs/theme-nord.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
-      <td><img src="proofs/theme-synthwave.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img alt="Nord Theme" src="proofs/theme-nord.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
+      <td><img alt="Synthwave Theme" src="proofs/theme-synthwave.png" width="100%" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);"></td>
     </tr>
   </table>
   <br/>
@@ -176,7 +176,7 @@ The internal architecture strictly enforces modular separation and configuration
 
 The codebase is structured as a layered pipeline. Each module owns a single concern.
 
-```
+```text
 src/
 ├── main.py            # Entrypoint — CLI args, QApplication bootstrap
 ├── themes.py          # Theme registry — 10 palettes as config dicts
@@ -406,7 +406,7 @@ While extremely stable for isolated desktop generation, the following architectu
 
 ## ⌨️ CLI Reference
 
-```
+```text
 usage: main.py [-h] [--theme THEME]
 
 options:
